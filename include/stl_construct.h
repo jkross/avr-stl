@@ -42,6 +42,11 @@ __STL_BEGIN_NAMESPACE
 // non-standard extensions.
 
 // Internal names
+template<class _Tp>
+inline void destroy(_Tp* __pointer);
+
+template<class _ForwardIterator>
+inline void destroy(_ForwardIterator __first, _ForwardIterator __last);
 
 template <class _T1, class _T2>
 inline void _Construct(_T1* __p, const _T2& __value) {
@@ -66,11 +71,11 @@ __destroy_aux(_ForwardIterator __first, _ForwardIterator __last, __false_type)
     destroy(&*__first);
 }
 
-template <class _ForwardIterator> 
+template <class _ForwardIterator>
 inline void __destroy_aux(_ForwardIterator, _ForwardIterator, __true_type) {}
 
 template <class _ForwardIterator, class _Tp>
-inline void 
+inline void
 __destroy(_ForwardIterator __first, _ForwardIterator __last, _Tp*)
 {
   typedef typename __type_traits<_Tp>::has_trivial_destructor
